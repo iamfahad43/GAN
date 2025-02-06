@@ -4,6 +4,11 @@ Welcome to the **GAN Learning Platform**, an educational and interactive applica
 
 ---
 
+<img width="955" alt="GAN" src="https://github.com/user-attachments/assets/92a29567-9332-4099-91de-c39be3d438c1" />
+
+
+---
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
