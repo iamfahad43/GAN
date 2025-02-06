@@ -1,0 +1,151 @@
+<!-- Filename: templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <title>GAN Learning Platform</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #d4e7d4, #f2f2f2);
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #006600;
+        }
+
+        #main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #params-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+            margin-top: 20px;
+        }
+
+        label {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #006600;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #006600;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        #generatedImage {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-container">
+        <h1>GAN Learning Platform</h1>
+        <p>Explore the joy of learning Generative Adversarial Networks (GANs).</p>
+
+        <!-- GAN Parameter Inputs -->
+        <div id="params-container">
+            <div>
+                <label for="learningRate">Learning Rate:</label>
+                <input type="number" id="learningRate" value="0.001" step="0.001">
+            </div>
+            <div>
+                <label for="batchSize">Batch Size:</label>
+                <input type="number" id="batchSize" value="64" step="1">
+            </div>
+        </div>
+
+        <!-- Train GAN Button -->
+        <button onclick="trainGAN()">Train GAN</button>
+
+        <!-- Generate Image Section -->
+        <div>
+            <label for="textInput">Text Input:</label>
+            <input type="text" id="textInput" placeholder="Enter description..." style="font-size: 20px;">
+            <button onclick="generateImage()">Generate Image</button>
+            <div id="generatedImage"></div>
+        </div>
+
+        <!-- Download Image Button -->
+        <button onclick="downloadImage()">Download Image</button>
+
+        <!-- Last Generated Image Button -->
+        <a href="/last-generated-image">View Last Generated Image</a>
+    </div>
+
+    <script>
+        // Train GAN function
+        function trainGAN() {
+            fetch('/api/train')
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                });
+        }
+
+        // Generate Image function
+        function generateImage() {
+            const textInput = document.getElementById('textInput').value;
+
+            fetch('/api/generate-image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ textInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.imagePath) {
+                    // Update the HTML to display the generated image
+                    document.getElementById('generatedImage').innerHTML = `<img src="${data.imagePath}" alt="Generated Image">`;
+                } else {
+                    console.error("Image path not received in the response");
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching image:", error);
+            });
+        }
+
+        // Download Image function
+        function downloadImage() {
+            fetch('/api/download-image')
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'generated_image.png';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                });
+        }
+    </script>
+</body>
+</html>

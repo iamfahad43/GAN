@@ -1,0 +1,51 @@
+<!-- Filename: templates/last_generated_image.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Last Generated Image</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 5px solid #4CAF50;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        a {
+            display: block;
+            color: #4CAF50;
+            margin-top: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Last Generated Image</h1>
+
+    <!-- Display the last generated image -->
+    <img src="{{ image_path }}" alt="Last Generated Image">
+
+    <!-- Home Button -->
+    <a href="/">Go back to home</a>
+</body>
+</html>
