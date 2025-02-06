@@ -1,4 +1,4 @@
-**# GAN Learning Platform
+# GAN Learning Platform
 
 Welcome to the **GAN Learning Platform**, an educational and interactive application designed to make Generative Adversarial Networks (GANs) more accessible and engaging. This project provides a simple interface for users to adjust GAN parameters, train the model, and generate black-and-white images.
 
@@ -153,4 +153,3 @@ To improve the platform's performance and output quality:
 - Develop a more sophisticated leaderboard system with user authentication.
 
 ---
-**
